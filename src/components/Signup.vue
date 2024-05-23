@@ -51,7 +51,6 @@ export default {
 
       this.$http.plain.post('/signup', {email: this.email, password: this.password, password_confirmation: this.password_confirmation})
         .then(response => {
-          console.log('signup page', response)
           this.signinSuccessful(response)
           this.email = ''
           this.password = ''

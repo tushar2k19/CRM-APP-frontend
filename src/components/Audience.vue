@@ -252,7 +252,6 @@ export default {
       }
       if (this.currentPage1 > this.pagesToShow + 1) pages.unshift(this.currentPage1 - (this.currentPage1 - 1), 'ellipsis')
       if (this.currentPage1 < totalPages - this.pagesToShow) pages.push('ellipsis', totalPages)
-      console.log(pages)
       return pages
     }
   },
@@ -274,7 +273,6 @@ export default {
           this.startDate = ''
           this.endDate = ''
           this.dateFilterModal = false
-          console.log('onsearch', response.data.data)
           this.contacts = response.data.data
           this.total_count = response.data.count
         })
@@ -293,7 +291,6 @@ export default {
         })
         .then(response => {
           this.resetbutton = true
-          console.log('onsearch', response.data.data)
           this.contacts = response.data.data
           this.total_count = response.data.count
         })
@@ -347,7 +344,6 @@ export default {
         .then(response => {
           this.contacts = response.data.data
           this.total_count = response.data.count
-          console.log('fetch contacts', response)
         })
       this.resetbutton = false
     },
