@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <router-link to="/home" class="nav-link">Grant Thornton Bharat</router-link>
+    <router-link to="/home" class="nav-link">CRM APP</router-link>
     <p class="header-text"></p>
   </header>
 </template>
