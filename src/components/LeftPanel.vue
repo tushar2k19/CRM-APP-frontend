@@ -58,7 +58,6 @@ export default {
     this.conversations_copy = this.conversations
   },
   updated () {
-    console.log('new-message')
     bus.$on('new-message', this.fetchConversations)
   },
   methods: {
