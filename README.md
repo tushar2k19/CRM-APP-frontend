@@ -1,4 +1,4 @@
-# frontend
+# CRM
 
 > A Vue.js project
 
