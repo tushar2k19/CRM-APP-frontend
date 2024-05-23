@@ -38,7 +38,8 @@ const router = new Router({
       path: '/crm',
       name: 'Crm',
       component: Crm
-    },{
+    },
+    {
       path: '/home',
       name: 'Home',
       component: Home
@@ -47,7 +48,7 @@ const router = new Router({
       path: '/signin',
       name: 'Signin',
       component: Signin
-    },
+    }
 
   ]
 })
@@ -60,7 +61,7 @@ router.beforeEach((to, from, next) => {
   }
 
   if (!isSignedIn) {
-    next({ name: 'Signin' })    //can also do {{{{  next('/signin')   }}}} but not doing to keep the original url entact (login krke bhi ussi endpoint pr jaaega jisko hot kara tha)
+    next({ name: 'Signin' }) // can also do {{{{  next('/signin')   }}}} but not doing to keep the original url entact (login krke bhi ussi endpoint pr jaaega jisko hot kara tha)
   } else {
     next()
   }

@@ -44,57 +44,57 @@ import {bus} from '../main'
 export default {
   name: 'LeftPanel',
   props: {},
-  data() {
+  data () {
     return {
       conversations: [],
       conversations_copy: [],
       searchText: '',
       isResetActive: false,
-      searchClicked: false,
-    };
+      searchClicked: false
+    }
   },
-  async mounted() {
-    await this.fetchConversations();
+  async mounted () {
+    await this.fetchConversations()
     this.conversations_copy = this.conversations
   },
-  updated() {
-    console.log("new-message");
+  updated () {
+    console.log('new-message')
     bus.$on('new-message', this.fetchConversations)
   },
   methods: {
-    fetchConversations() {
+    fetchConversations () {
       this.$http.secured.get('/conversation')
         .then(response => {
           this.conversations = response.data.conversations
         })
     },
-    handleConversationClick(conversation) {
+    handleConversationClick (conversation) {
       this.searchText = ''
-      this.$emit('conversation-selected', conversation);
+      this.$emit('conversation-selected', conversation)
     },
-    onSearch() {
+    onSearch () {
       this.$http.secured.get('/conversation/search',
         {
-          params:{name: this.searchText}
+          params: {name: this.searchText}
         })
-        .then( response => {
+        .then(response => {
           this.conversations = response.data.conversation
           this.searchClicked = true
         }).catch(e => {
-          console.log("inside error", e)
-      });
+          console.log('inside error', e)
+        })
     },
-    onReset(){
+    onReset () {
       this.searchClicked = false
       this.searchText = ''
-      this.fetchConversations();
+      this.fetchConversations()
     },
-    getTruncatedMessage(message) {
+    getTruncatedMessage (message) {
       if (message.length > 25) {
-        return message.slice(0,25) + "...";
+        return message.slice(0, 25) + '...'
       }
-      return message;
-    },
+      return message
+    }
   },
   computed: {
     // filteredConversations() {
@@ -106,8 +106,8 @@ export default {
     //     return this.conversations;
     //   }
     // },
-  },
-};
+  }
+}
 
 </script>
 
@@ -125,8 +125,6 @@ export default {
   align-items: center;
   margin-bottom: 0;
 }
-
-
 .search-input {
   padding: 0.5rem;
   width: 70%;

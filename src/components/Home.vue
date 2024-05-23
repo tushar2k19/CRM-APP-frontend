@@ -9,7 +9,7 @@
 <script>
 export default {
   name: 'Home',
-  data() {
+  data () {
     return {
       menuVisible: false
     }

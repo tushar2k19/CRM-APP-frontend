@@ -13,24 +13,24 @@
 </template>
 
 <script>
-import LeftPanel from './LeftPanel.vue';
-import CenterPanel from './CenterPanel.vue';
-import RightPanel from './RightPanel.vue';
+import LeftPanel from './LeftPanel.vue'
+import CenterPanel from './CenterPanel.vue'
+import RightPanel from './RightPanel.vue'
 
 export default {
   name: 'Crm',
   components: { LeftPanel, CenterPanel, RightPanel },
-  data() {
+  data () {
     return {
-      selectedConversation: null,
-    };
+      selectedConversation: null
+    }
   },
   methods: {
-    async handleConversationSelected(conversation) {
-      this.selectedConversation = conversation;
-    },
-  },
-};
+    async handleConversationSelected (conversation) {
+      this.selectedConversation = conversation
+    }
+  }
+}
 </script>
 
 <style>

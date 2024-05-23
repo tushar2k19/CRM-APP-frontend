@@ -21,29 +21,29 @@
 <script>
 export default {
   props: {
-    conversation: Object,
+    conversation: Object
   },
-  data() {
+  data () {
     return {
       newNote: '',
-      notes: [],
-    };
+      notes: []
+    }
   },
-  mounted() {
-     this.fetchNotes(this.conversation.id);
+  mounted () {
+    this.fetchNotes(this.conversation.id)
   },
   watch: {
     conversation: {
-      handler(newVal, oldVal) {
-        this.fetchNotes();
+      handler (newVal, oldVal) {
+        this.fetchNotes()
       },
       deep: true,
-      immediate: true,
-    },
+      immediate: true
+    }
   },
 
   methods: {
-    async fetchNotes(conversationId) {
+    async fetchNotes (conversationId) {
       this.$http.secured.get('/notes',
         {
           params: {
@@ -51,22 +51,22 @@ export default {
           }
         })
         .then(response => {
-          this.notes = response.data.data.reverse();
-        });
+          this.notes = response.data.data.reverse()
+        })
     },
-    handleAddNote() {
+    handleAddNote () {
       this.$http.secured.post('/new_note', {
         conversation_id: this.conversation.id,
         note: this.newNote
       })
         .then(response => {
-          alert("Note Saved");
-          this.newNote = '';
-          this.fetchNotes(this.conversation.id);
-        });
-    },
-  },
-};
+          alert('Note Saved')
+          this.newNote = ''
+          this.fetchNotes(this.conversation.id)
+        })
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -19,22 +19,22 @@
 
 <script>
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   methods: {
-    signedIn(){
-      return localStorage.signedIn === "true";
+    signedIn () {
+      return localStorage.signedIn === 'true'
     },
     signOut () {
       this.$http.secured.delete('/signout')
         .then(response => {
-          delete localStorage.csrf;
-          delete localStorage.signedIn;
-          this.$router.replace('/');
-          window.location.reload();
+          delete localStorage.csrf
+          delete localStorage.signedIn
+          this.$router.replace('/')
+          window.location.reload()
         })
         .catch(error => {
-          console.log("signout_error -> ", error)
-        });
+          console.log('signout_error -> ', error)
+        })
     }
   }
 }

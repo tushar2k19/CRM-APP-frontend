@@ -24,54 +24,56 @@
 
 <script>
 export default {
-  name: "Signin",
-  data() {
+  name: 'Signin',
+  data () {
     return {
-      email: "",
-      password: "",
-      error: '',
-    };
+      email: '',
+      password: '',
+      error: ''
+    }
   },
   created: function () {
-    this.checkSignedin();
+    this.checkSignedin()
   },
   updated () {
-    this.checkSignedin();
+    this.checkSignedin()
   },
   methods: {
-    clearError() {
+    clearError () {
       this.error = ''
     },
     checkSignedin: function () {
-      if(Boolean(localStorage.signedIn))
+      if (localStorage.signedIn) {
         this.$router.replace('/home')
+      }
     },
     signin () {
       this.$http.plain.post('/signin', {email: this.email, password: this.password})
         .then((response) => {
-          this.signinSuccessful(response);})
+          this.signinSuccessful(response)
+        })
         .catch(error => this.signinFailed(error))
     },
     signinSuccessful (response) {
-      if(!response.data.csrf)
-      {
-        this.signinFailed(response);
+      if (!response.data.csrf) {
+        this.signinFailed(response)
         return
       }
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.error = ''
       this.$router.replace('/home')
-      window.location.reload();
-    }, signinFailed: function (error) {
-      this.error = (error.response && error.response.data && error.response.data.error) || ""
+      window.location.reload()
+    },
+    signinFailed: function (error) {
+      this.error = (error.response && error.response.data && error.response.data.error) || ''
       this.password = ''
       this.email = ''
       delete localStorage.csrf
       delete localStorage.signedIn
-    },
-  },
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

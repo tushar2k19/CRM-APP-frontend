@@ -24,47 +24,47 @@
 import {bus} from '../main.js'
 export default {
   props: {
-    conversation: Object,
+    conversation: Object
   },
-  data() {
+  data () {
     return {
       newMessage: '',
       messages: [],
       conv_id: -1,
       temp_msg: '',
-      selectedMessage: null,
-    };
+      selectedMessage: null
+    }
   },
-  mounted() {
-    this.fetchMessages();
+  mounted () {
+    this.fetchMessages()
     this.$nextTick(() => {
-      this.$refs.chatHistory.scrollTop = this.$refs.chatHistory.scrollHeight;
-    });
+      this.$refs.chatHistory.scrollTop = this.$refs.chatHistory.scrollHeight
+    })
   },
-  updated(){
-      this.$refs.chatHistory.scrollTop = this.$refs.chatHistory.scrollHeight;
+  updated () {
+    this.$refs.chatHistory.scrollTop = this.$refs.chatHistory.scrollHeight
   },
   watch: {
     conversation: {
-      handler(newVal, oldVal) {
-        this.fetchMessages();
+      handler (newVal, oldVal) {
+        this.fetchMessages()
       },
       deep: true,
-      immediate: true,
+      immediate: true
     },
     messages: {
-      handler() {
-        this.scrollToBottom();
+      handler () {
+        this.srollToBottom()
       },
-      deep: true,
-    },
+      deep: true
+    }
   },
   methods: {
-    selectMessage(messageId) {
-      this.selectedMessage = messageId;
+    selectMessage (messageId) {
+      this.selectedMessage = messageId
     },
-    fetchMessages() {
-      this.newMessage = '';
+    fetchMessages () {
+      this.newMessage = ''
       this.$http.secured.get('/conversation_messages',
         {
           params: {
@@ -73,30 +73,29 @@ export default {
         })
         .then(response => {
           this.messages = response.data.messages
-        });
+        })
     },
-      handleSendMessage() {
+    handleSendMessage () {
       this.temp_msg = this.newMessage
-       this.newMessage = ''
+      this.newMessage = ''
       this.$http.secured.post('/conversation_messages/send',
         {
-            conversation_id: this.conversation.id,
-            message: this.temp_msg
+          conversation_id: this.conversation.id,
+          message: this.temp_msg
         })
         .then(async response => {
           await bus.$emit('new-message')
-            this.fetchMessages();
-
-        }).catch(e=>{
-        this.newMessage = '';
-          alert("OOPS!! Something Went Wrong.")
-      });
+          this.fetchMessages()
+        }).catch(e => {
+          this.newMessage = ''
+          alert('OOPS!! Something Went Wrong.')
+        })
     },
-    scrollToBottom(){
-      this.$refs.chatHistory.scrollTop = this.$refs.chatHistory.scrollHeight;
+    scrollToBottom () {
+      this.$refs.chatHistory.scrollTop = this.$refs.chatHistory.scrollHeight
     }
-  },
-};
+  }
+}
 </script>
 
 <style scoped>
@@ -157,8 +156,6 @@ export default {
   background-color: #fff;
   border-radius: 4px;
 }
-
-
 .message-content {
   font-size: 0.9rem;
   line-height: 1.5;

@@ -170,10 +170,10 @@
             <button v-on:click="prevPage" class="prev-page1" v-if="currentPage1!==1"><img :src="left_ic" /></button>
             <template v-for="page in pagesToDisplay">
               <template v-if="page === 'ellipsis'">
-                <span class="ellipsis"><img :src="pagination_ic" /></span>
+                <span class="ellipsis" :key="page"><img :src="pagination_ic" /></span>
               </template>
               <template v-else>
-                <button v-on:click="changePage(page)" :class="{ active: currentPage1 === page }" class="page-number1">
+                <button v-on:click="changePage(page)" :class="{ active: currentPage1 === page }" class="page-number1" :key="page">
                   {{ page }}
                 </button>
               </template>
@@ -188,14 +188,19 @@
 </template>
 
 <script>
+// eslint-disable-next-line camelcase
 import pagination_ic from '../assets/images/pagination_dots.svg'
+// eslint-disable-next-line camelcase
 import left_ic from '../assets/images/left.svg'
+// eslint-disable-next-line camelcase
 import right_ic from '../assets/images/right.svg'
+// eslint-disable-next-line camelcase
 import DoubleLeft_ic from '../assets/images/DoubleLeft.svg'
+// eslint-disable-next-line camelcase
 import DoubleRight_ic from '../assets/images/DoubleRight.svg'
 export default {
   name: 'Audience',
-  data() {
+  data () {
     return {
       left_ic,
       right_ic,
@@ -206,7 +211,7 @@ export default {
       newContact: {
         name: '',
         phone: '',
-        email: '',
+        email: ''
       },
       editname: '',
       editphone: '',
@@ -219,7 +224,7 @@ export default {
       perPage: 5,
       pagesToShow: 2,
       fastJump: 4,
-      headers: ["Name", "Email", "Phone", "Actions"],
+      headers: ['Name', 'Email', 'Phone', 'Actions'],
       isDropdown: false,
       editConfirmation: false,
       deleteConfirmation: false,
@@ -229,15 +234,15 @@ export default {
       startDate: '',
       endDate: '',
       dateFilterModal: false,
-      total_count: -1,
+      total_count: -1
 
-    };
+    }
   },
   computed: {
-    pages() { //req
+    pages () { // req
       return Array.from({length: Math.ceil(this.total_count / this.perPage)}, (_, i) => i + 1)
     },
-    pagesToDisplay() { //req
+    pagesToDisplay () { // req
       const pages = []
       const totalPages = this.pages.length
       const start = Math.max(this.currentPage1 - this.pagesToShow, 1)
@@ -251,11 +256,11 @@ export default {
       return pages
     }
   },
-  mounted() {
-    this.fetchContacts(1);
+  mounted () {
+    this.fetchContacts(1)
   },
   methods: {
-    onFilterByDate() {
+    onFilterByDate () {
       this.$http.secured.get('/profile/filter',
         {
           params: {
@@ -265,18 +270,18 @@ export default {
           }
         })
         .then(response => {
-          this.resetbutton = true;
+          this.resetbutton = true
           this.startDate = ''
-            this.endDate = ''
+          this.endDate = ''
           this.dateFilterModal = false
-          console.log("onsearch",response.data.data);
-           this.contacts = response.data.data;
-           this.total_count = response.data.count;
-        });
+          console.log('onsearch', response.data.data)
+          this.contacts = response.data.data
+          this.total_count = response.data.count
+        })
     },
-    onSearch() {
-      if(this.searchText.trim()===''){
-        alert("Search can't be left empty");
+    onSearch () {
+      if (this.searchText.trim() === '') {
+        alert("Search can't be left empty")
         return
       }
       this.$http.secured.get('/profile/search',
@@ -287,52 +292,52 @@ export default {
           }
         })
         .then(response => {
-          this.resetbutton = true;
-          console.log("onsearch",response.data.data);
-          this.contacts = response.data.data;
-          this.total_count = response.data.count;
-        });
+          this.resetbutton = true
+          console.log('onsearch', response.data.data)
+          this.contacts = response.data.data
+          this.total_count = response.data.count
+        })
     },
-    onReset(){
-      this.searchText = '';
+    onReset () {
+      this.searchText = ''
       this.startDate = ''
       this.endDate = ''
-      this.resetbutton = false;
-      this.fetchContacts(this.currentPage1);
+      this.resetbutton = false
+      this.fetchContacts(this.currentPage1)
     },
-    showAddContactModalfn() {
-      this.showAddContactModal = true;
-      this.newContact = { name: '', phone: '', email: '', url: '' };
+    showAddContactModalfn () {
+      this.showAddContactModal = true
+      this.newContact = { name: '', phone: '', email: '', url: '' }
     },
-    showDateFilterModalfn() {
-      this.dateFilterModal =  true;
-      this.startDate = '';
-      this.endDate = '';
+    showDateFilterModalfn () {
+      this.dateFilterModal = true
+      this.startDate = ''
+      this.endDate = ''
     },
-    saveContact() {
+    saveContact () {
       if (this.areDetailsComplete()) {
         this.$http.secured.post('/profile/new',
           {
             name: this.newContact.name,
             email: this.newContact.email,
-            phone: this.newContact.phone,
+            phone: this.newContact.phone
           })
-          .then( response => {
-            this.showAddContactModal = false;
-            this.newContact = { name: '', email: '', phone: '' };
-            this.incomplete_details = false;
-            this.fetchContacts(this.currentPage);
-          });
+          .then(response => {
+            this.showAddContactModal = false
+            this.newContact = { name: '', email: '', phone: '' }
+            this.incomplete_details = false
+            this.fetchContacts(this.currentPage)
+          })
       }
     },
-    areDetailsComplete() {
+    areDetailsComplete () {
       if (this.newContact.email === '' || this.newContact.phone === '' || this.newContact.name === '') {
-        this.incomplete_details = true;
-        return false;
+        this.incomplete_details = true
+        return false
       }
-      return true;
+      return true
     },
-    fetchContacts(page){
+    fetchContacts (page) {
       this.$http.secured.get('/profile',
         {
           params: {
@@ -340,59 +345,59 @@ export default {
           }
         })
         .then(response => {
-          this.contacts = response.data.data;
-          this.total_count = response.data.count;
-          console.log("fetch contacts", response)
-        });
-      this.resetbutton = false;
+          this.contacts = response.data.data
+          this.total_count = response.data.count
+          console.log('fetch contacts', response)
+        })
+      this.resetbutton = false
     },
-    closeButton() {
-      this.editphone = '';
-      this.editname=''
+    closeButton () {
+      this.editphone = ''
+      this.editname = ''
       this.editemail = ''
       this.editurl = ''
       this.editid = -1
       this.dateFilterModal = false
-      this.showAddContactModal = false;
-        this.incomplete_details = false;
-      this.editConfirmation = false;
-        this.deleteConfirmation = false;
-        this.startDate = ''
+      this.showAddContactModal = false
+      this.incomplete_details = false
+      this.editConfirmation = false
+      this.deleteConfirmation = false
+      this.startDate = ''
       this.endDate = ''
     },
-    changePage(page) {
+    changePage (page) {
       if (page === 'ellipsis') return
       this.currentPage1 = page
       this.pageChanged(this.currentPage1)
     },
-    prevPage() {
+    prevPage () {
       if (this.currentPage1 > 1) {
         this.currentPage1--
         this.pageChanged(this.currentPage1)
       }
     },
-    nextPage() {
+    nextPage () {
       if (this.currentPage1 < this.pages.length) {
         this.currentPage1++
         this.pageChanged(this.currentPage1)
       }
     },
-    fastPrevPage() {
+    fastPrevPage () {
       if (this.currentPage1 > 1) {
         this.currentPage1 -= this.fastJump
         this.pageChanged(this.currentPage1)
       }
     },
-    fastNextPage() {
+    fastNextPage () {
       if (this.currentPage1 < this.pages.length) {
         this.currentPage1 += this.fastJump
         this.pageChanged(this.currentPage1)
       }
     },
-    pageChanged(val) {
+    pageChanged (val) {
       this.fetchContacts(val)
     },
-    onEditClick(item) {
+    onEditClick (item) {
       this.editname = item.name
       this.editphone = item.phone
       this.editemail = item.email
@@ -401,18 +406,18 @@ export default {
 
       this.editConfirmation = true
     },
-    onEdit() {
-      this.editConfirmation = false;
+    onEdit () {
+      this.editConfirmation = false
       this.$http.secured.put('/profile/update',
         {
           id: this.editid,
           name: this.editname,
           email: this.editemail,
-          phone: this.editphone,
+          phone: this.editphone
         })
-        .then( response => {
-          this.editphone = '';
-          this.editname=''
+        .then(response => {
+          this.editphone = ''
+          this.editname = ''
           this.editemail = ''
           this.editurl = ''
           this.editid = -1
@@ -421,15 +426,15 @@ export default {
           this.endDate = ''
           this.resetbutton = false
           this.fetchContacts(this.currentPage1)
-          alert("Edited Successfully!!");
-        });
+          alert('Edited Successfully!!')
+        })
     },
-    onDelete() {
-      this.deleteConfirmation = false;
+    onDelete () {
+      this.deleteConfirmation = false
       this.$http.secured.delete('/profile/delete', {
-            data: {
-              id: this.newContact.id
-            }})
+        data: {
+          id: this.newContact.id
+        }})
         .then(response => {
           this.newContact = { name: '', email: '', phone: '' }
           this.fetchContacts(this.currentPage1)

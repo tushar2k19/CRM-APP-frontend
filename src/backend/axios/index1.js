@@ -1,9 +1,10 @@
 import axios from 'axios'
-// import {process} from "karma/lib/cli";
+// import {process} from 'karma/lib/cli'
 
 // API_URL = process.env.REACT_APP_API_URL;
 
-const API_URL = 'http://localhost:3000'
+const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'crm_tushar.com'
+// console.log("tmkoc", API_URL, process.env)
 
 const securedAxiosInstance = axios.create({
   baseURL: API_URL,

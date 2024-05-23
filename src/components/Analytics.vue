@@ -15,31 +15,31 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       stats: [
         { title: 'Total Contacts', value: 0 },
         { title: 'Contacts (Last 7 Days)', value: 0 },
         { title: 'Conversations (Last 7 Days)', value: 0 }
       ]
-    };
+    }
   },
-  created() {
-    this.fetchdata();
+  created () {
+    this.fetchdata()
   },
   methods: {
-    async fetchdata() {
+    async fetchdata () {
       this.$http.secured.get('/analytics', {
         params: {}
       })
         .then(response => {
-          this.stats[0].value = response.data.total_count;
-          this.stats[1].value = response.data.weekly_count;
-          this.stats[2].value = response.data.weekly_conv_count;
-        });
+          this.stats[0].value = response.data.total_count
+          this.stats[1].value = response.data.weekly_count
+          this.stats[2].value = response.data.weekly_conv_count
+        })
     }
   }
-};
+}
 </script>
 
 <style scoped>

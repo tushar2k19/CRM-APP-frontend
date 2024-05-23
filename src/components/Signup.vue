@@ -28,55 +28,54 @@
 
 <script>
 export default {
-  name: "Signup",
-  data() {
+  name: 'Signup',
+  data () {
     return {
       email: '',
       password: '',
       error: '',
-      password_confirmation: '',
+      password_confirmation: ''
     }
   },
   methods: {
-    clearError() {
+    clearError () {
       this.error = ''
     },
     signup () {
       if (this.password !== this.password_confirmation) {
-        this.error = "Passwords do not match"
+        this.error = 'Passwords do not match'
         this.password = ''
         this.password_confirmation = ''
-        return;
+        return
       }
 
       this.$http.plain.post('/signup', {email: this.email, password: this.password, password_confirmation: this.password_confirmation})
         .then(response => {
-          console.log("signup page", response)
-          this.signinSuccessful(response);
-          this.email = '';
+          console.log('signup page', response)
+          this.signinSuccessful(response)
+          this.email = ''
           this.password = ''
         })
         .catch(error => this.signinFailed(error))
     },
     signinSuccessful (response) {
-      if(!response.data.csrf)
-      {
-        this.signinFailed(response);
+      if (!response.data.csrf) {
+        this.signinFailed(response)
         return
       }
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.error = ''
       this.$router.replace('/home')
-      window.location.reload();
+      window.location.reload()
     },
     signinFailed: function (error) {
-      this.error = (error.response && error.response.data && error.response.data.error) || "Something went wrong"
+      this.error = (error.response && error.response.data && error.response.data.error) || 'Something went wrong'
       delete localStorage.csrf
       delete localStorage.signedIn
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -100,7 +99,6 @@ export default {
 }
 
 .signup-title {
-  //font-size: 2rem;
   margin-bottom: 2rem;
   color: #343a40;
 }

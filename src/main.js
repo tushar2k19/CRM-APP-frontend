@@ -4,11 +4,11 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueAxios from 'vue-axios'
-import {securedAxiosInstance, plainAxiosInstance} from "./backend/axios/index1";
+import {securedAxiosInstance, plainAxiosInstance} from './backend/axios/index1'
 // import './main.css'
 
 Vue.config.productionTip = false
-export const bus = new Vue();
+export const bus = new Vue()
 
 Vue.use(VueAxios, {
   secured: securedAxiosInstance,
@@ -17,7 +17,7 @@ Vue.use(VueAxios, {
 Vue.prototype.$http = {
   secured: securedAxiosInstance,
   plain: plainAxiosInstance
-};
+}
 
 /* eslint-disable no-new */
 new Vue({
