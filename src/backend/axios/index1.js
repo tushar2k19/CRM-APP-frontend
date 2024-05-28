@@ -3,7 +3,7 @@ import axios from 'axios'
 
 // API_URL = process.env.REACT_APP_API_URL;
 
-const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'crm_tushar.com'
+const API_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'crm-be.up.railway.app'
 console.log('tmkoc', API_URL, process.env)
 
 const securedAxiosInstance = axios.create({
