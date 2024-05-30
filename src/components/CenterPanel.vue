@@ -54,7 +54,7 @@ export default {
     },
     messages: {
       handler () {
-        this.srollToBottom()
+        this.scrollToBottom()
       },
       deep: true
     }
