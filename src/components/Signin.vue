@@ -47,13 +47,12 @@ export default {
         this.$router.replace('/home')
       }
     },
-    async signin() {
-      try {
-        const response = await this.$http.plain.post('/signin', { email: this.email, password: this.password })
-        this.signinSuccessful(response)
-      } catch (error) {
-        this.signinFailed(error)
-      }
+    signin () {
+      this.$http.plain.post('/signin', {email: this.email, password: this.password})
+        .then((response) => {
+          this.signinSuccessful(response)
+        })
+        .catch(error => this.signinFailed(error))
     },
     signinSuccessful (response) {
       if (!response.data.csrf) {
@@ -63,7 +62,8 @@ export default {
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.error = ''
-      window.location.href = '/#/home'
+      this.$router.replace('/home')
+      window.location.reload()
     },
     signinFailed: function (error) {
       this.error = (error.response && error.response.data && error.response.data.error) || ''
