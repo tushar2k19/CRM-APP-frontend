@@ -63,7 +63,7 @@ export default {
       localStorage.csrf = response.data.csrf
       localStorage.signedIn = true
       this.error = ''
-      window.location.href = '/home'
+      window.location.href = '/#/home'
     },
     signinFailed: function (error) {
       this.error = (error.response && error.response.data && error.response.data.error) || ''
