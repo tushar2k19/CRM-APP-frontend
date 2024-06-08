@@ -23,7 +23,7 @@ npm run unit
 # run all tests
 npm test
 ```
-                      Grant Thornton Bharat - Customer Relationship Management Dashboard
+                         Customer Relationship Management Dashboard
 
 
 This document provides an overview of the features and functionalities of the Customer
